@@ -1,1 +1,3 @@
-# backend_typescript
+## backend_typescript
+
+    npm install
