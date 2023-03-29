@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express"
 
+import todoRouter from "./routes/todo-router";
+import userRouter from "./routes/users-router";
+
 export class Server {
 
     readonly port!: number
@@ -9,12 +12,9 @@ export class Server {
     }
     start() {
         const app = express()
-
-        app.get('/', (req: Request, res: Response) => {
-
-            res.send("Hello World")
-
-        });
+        app.use(express.json())
+        app.use("/api/v1/todos", todoRouter)
+        app.use("/api/v1/users", userRouter)
 
         app.listen(this.port, () => {
             console.log("le serveur écoute sur le port:", this.port);
