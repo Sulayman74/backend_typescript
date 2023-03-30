@@ -8,7 +8,7 @@ todoRouter
     .post("/addTodo", todos.createTodo)
     .get("/", todos.getTodos)
     .get('/:id', todos.getTodoById)
-    .put('/:id', todos.updateTodoById)
+    .patch('/:id', todos.updateTodoById)
     .delete('/:id', todos.deleteTodoById)
 
 

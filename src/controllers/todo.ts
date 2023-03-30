@@ -18,7 +18,7 @@ export class TodoController {
         try {
             const result = await pool.query(query, values);
             const todo = result.rows[0];
-            return res.status(200).json(todo);
+            return res.status(201).json(todo);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Error creating todo' });
@@ -26,9 +26,10 @@ export class TodoController {
     }
 
     async getTodos(req: Request, res: Response) {
+
         try {
-            const result = await pool.query('SELECT * FROM todos');
-            res.json(result.rows);
+            const result = await pool.query('SELECT * FROM todos')
+            res.status(200).json(result.rows);
         } catch (err) {
             console.error(err);
             res.status(500).send('Server Error');
@@ -36,12 +37,11 @@ export class TodoController {
     }
 
     async getTodoById(req: Request, res: Response) {
-        const id = parseInt(req.params.id);
-
+        const { id } = req.params;
         try {
-            const result = await pool.query('SELECT * FROM todos WHERE id = $1', [id]);
+            const result = await pool.query('SELECT * FROM todos WHERE user_id = $1', [id]);
             if (result.rowCount > 0) {
-                res.json(result.rows[0]);
+                res.status(200).json(result.rows[0]);
             } else {
                 res.status(404).send('Todo not found');
             }
@@ -52,16 +52,16 @@ export class TodoController {
     }
 
     async updateTodoById(req: Request, res: Response) {
-        const id = parseInt(req.params.id);
-        const { description, text } = req.body;
+        const { id } = req.params
+        const { description, texte, todo_id } = req.body;
 
         try {
             const result = await pool.query(
-                'UPDATE todos SET description = $1, text = $2, updated_at = now() WHERE id = $3 RETURNING *',
-                [description, text, id]
+                'UPDATE todos SET description = $1, texte = $2, updatedat = now() WHERE user_id = $3 AND todo_id= $4 RETURNING *',
+                [description, texte, id, todo_id]
             );
             if (result.rowCount > 0) {
-                res.json(result.rows[0]);
+                res.status(200).json(result.rows[0]);
             } else {
                 res.status(404).send('Todo not found');
             }
@@ -78,7 +78,7 @@ export class TodoController {
         try {
             const result = await pool.query('DELETE FROM todos WHERE id = $1 RETURNING *', [id]);
             if (result.rowCount > 0) {
-                res.json(result.rows[0]);
+                res.status(200).json(result.rows[0]);
             } else {
                 res.status(404).send('Todo not found');
             }

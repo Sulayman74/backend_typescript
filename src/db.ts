@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
 
 export const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
     database: "todo_typescript",
-    password: "pirate",
+    password: process.env.POSTGRES_PASSWORD,
     port: 5432,
 });
 
