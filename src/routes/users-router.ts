@@ -6,10 +6,10 @@ const users = new UserController()
 
 userRouter
     .post("/register", users.createUser)
-// .get("/", users.)
-// .get('/:id', users.)
-// .put('/:id', users.)
-// .delete('/:id', users.)
+    .get("/", users.getUsers)
+    .get('/:id', users.getUserById)
+    .patch('/:id', users.updateUserById)
+    .delete('/:id', users.deleteUserById)
 
 
 

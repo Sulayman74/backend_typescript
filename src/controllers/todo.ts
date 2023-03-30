@@ -5,15 +5,16 @@ import { pool } from "../db"
 export class TodoController {
 
     async createTodo(req: Request, res: Response): Promise<Response> {
-        const { description, texte, iscompleted, user_id } = req.body;
+        const { id } = req.params
+        const { description, texte, iscompleted } = req.body;
 
         const query = `
         INSERT INTO todos (description, texte, iscompleted, createdat,user_id)
         VALUES ($1, $2, $3, NOW(),$4)
         RETURNING *
-        `;
+        `
 
-        const values = [description, texte, iscompleted, user_id];
+        const values = [description, texte, iscompleted, id];
 
         try {
             const result = await pool.query(query, values);

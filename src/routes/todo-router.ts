@@ -5,8 +5,8 @@ const todoRouter = Router();
 const todos = new TodoController()
 
 todoRouter
-    .post("/addTodo", todos.createTodo)
     .get("/", todos.getTodos)
+    .post("/addTodo/:id", todos.createTodo)
     .get('/:id', todos.getTodoById)
     .patch('/:id', todos.updateTodoById)
     .delete('/:id', todos.deleteTodoById)
