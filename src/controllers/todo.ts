@@ -37,12 +37,12 @@ export class TodoController {
         }
     }
 
-    async getTodoById(req: Request, res: Response) {
+    async getTodoById(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
         try {
             const result = await pool.query('SELECT * FROM todos WHERE user_id = $1', [id]);
             if (result.rowCount > 0) {
-                res.status(200).json(result.rows[0]);
+                return res.status(200).json(result.rows);
             } else {
                 res.status(404).send('Todo not found');
             }

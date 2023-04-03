@@ -72,11 +72,14 @@ export class UserController {
         const { firstname, lastname, email } = req.body;
 
         try {
+
+            const user = await pool.query('SELECT * FROM users WHERE id = $1', [id])
+
             const result = await pool.query(
                 'UPDATE users SET firstname = $1, lastname = $2, email = $3 WHERE user_id = $4 RETURNING *',
                 [firstname, lastname, email, id]
             );
-            if (result.rowCount > 0) {
+            if (!user) {
                 res.status(200).json(result.rows[0]);
             } else {
                 res.status(404).send('User not found');
