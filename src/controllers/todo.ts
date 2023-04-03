@@ -43,9 +43,9 @@ export class TodoController {
 
         try {
 
-            const result = await pool.query('SELECT * FROM todos WHERE todo_id = $1', [id]);
+            const result = await pool.query('SELECT * FROM todos WHERE user_id = $1', [id]);
             const todos = result.rowCount
-            const todoByID = result.rows[0]
+            const todoByID = result.rows
             if (todos > 0) {
                 res.status(200).json(todoByID);
             } else {

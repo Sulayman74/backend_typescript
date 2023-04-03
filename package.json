@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest --verbose",
     "test:dev": "jest --verbose --watchAll",
-    "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch \" \"nodemon dist/index.js\" ",
-    "start": "npx tsc && node dist/index.js"
+    "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npx tsc --watch \" \"nodemon dist/src/index.js\" ",
+    "start": "npx tsc && node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.2",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",

@@ -9,9 +9,10 @@ export class UserController {
     async createUser(req: Request, res: Response) {
         const { firstname, lastname, email, password } = req.body;
         // Vérifie si l'e-mail est valide en utilisant la fonction isEmail de Validator
-        console.log("email:", email);
+
         if (!validator.isEmail(email)) {
             res.status(400).json({ message: "L'adresse e-mail est invalide" });
+            return false
         }
         try {
             // Recherche l'utilisateur dans la base de données
@@ -21,6 +22,7 @@ export class UserController {
             // Vérifie si l'utilisateur existe déjà
             if (user) {
                 res.status(403).json({ message: "Cet utilisateur existe déjà" });
+                return false
             }
 
             // Crée un nouvel utilisateur dans la base de données
