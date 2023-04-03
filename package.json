@@ -7,7 +7,7 @@
     "test": "jest --verbose",
     "test:dev": "jest --verbose --watchAll",
     "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch \" \"nodemon dist/index.js\" ",
-    "start": "tsc && node dist/index.js"
+    "start": "npx tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "jest": "^29.5.0"
   },
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",

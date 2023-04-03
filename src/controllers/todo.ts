@@ -29,8 +29,9 @@ export class TodoController {
     async getTodos(req: Request, res: Response) {
 
         try {
-            const result = await pool.query('SELECT * FROM todos')
-            res.status(200).json(result.rows);
+            const result = await pool.query('SELECT * FROM todos');
+            const todos = result.rows;
+            res.status(200).json(todos);
         } catch (err) {
             console.error(err);
             res.status(500).send('Server Error');
@@ -39,12 +40,14 @@ export class TodoController {
 
     async getTodoById(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        const { todo_id } = req.body
+
         try {
-            const todo = await pool.query('SELECT * FROM todo WHERE id = $1 AND todo_id= $2', [id, todo_id])
+
             const result = await pool.query('SELECT * FROM todos WHERE todo_id = $1', [id]);
-            if (result.rowCount > 0) {
-                return res.status(200).json(result.rows);
+            const todos = result.rowCount
+            const todoByID = result.rows[0]
+            if (todos > 0) {
+                return res.status(200).json(todoByID);
             } else {
                 res.status(404).send('Todo not found');
             }
@@ -63,8 +66,10 @@ export class TodoController {
                 'UPDATE todos SET description = $1, texte = $2, updatedat = now() WHERE user_id = $3 AND todo_id= $4 RETURNING *',
                 [description, texte, id, todo_id]
             );
-            if (result.rowCount > 0) {
-                res.status(200).json(result.rows[0]);
+            const todos = result.rowCount
+            const todoByID = result.rows[0]
+            if (todos > 0) {
+                res.status(200).json(todoByID);
             } else {
                 res.status(404).send('Todo not found');
             }
@@ -80,8 +85,10 @@ export class TodoController {
 
         try {
             const result = await pool.query('DELETE FROM todos WHERE id = $1 RETURNING *', [id]);
-            if (result.rowCount > 0) {
-                res.status(200).json(result.rows[0]);
+            const todos = result.rowCount
+            const todoByID = result.rows[0]
+            if (todos > 0) {
+                res.status(200).json(todoByID);
             } else {
                 res.status(404).send('Todo not found');
             }
