@@ -5,8 +5,8 @@ import userRouter from "./routes/users-router";
 
 export class Server {
 
-    readonly port!: number
-    constructor(port: number) {
+    readonly port!: number | string
+    constructor(port: number | string) {
         this.port = port
 
     }

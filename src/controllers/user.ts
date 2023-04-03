@@ -6,7 +6,7 @@ import validator from 'validator';
 
 export class UserController {
 
-    async createUser(req: Request, res: Response): Promise<Response> {
+    async createUser(req: Request, res: Response) {
         const { firstname, lastname, email, password } = req.body;
         // Vérifie si l'e-mail est valide en utilisant la fonction isEmail de Validator
         console.log("email:", email);
@@ -36,23 +36,23 @@ export class UserController {
             res.status(201).json({ "user": newUser, "message": "utilisateur bien enregistré" });
         } catch (error) {
             // console.error(error);
-            return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur", error: error.detail });
+            res.status(500).json({ message: "Erreur lors de la création de l'utilisateur" });
         }
     }
 
 
-    async getUsers(req: Request, res: Response): Promise<Response> {
+    async getUsers(req: Request, res: Response) {
 
         try {
             const result = await pool.query('SELECT * FROM users')
             res.status(200).json(result.rows);
         } catch (err) {
             console.error(err);
-            return res.status(500).send('Server Error');
+            res.status(500).send('Server Error');
         }
     }
 
-    async getUserById(req: Request, res: Response): Promise<Response> {
+    async getUserById(req: Request, res: Response) {
         const { id } = req.params;
         try {
             const result = await pool.query('SELECT * FROM users WHERE user_id = $1', [id]);
@@ -63,11 +63,11 @@ export class UserController {
             }
         } catch (err) {
             console.error(err);
-            return res.status(500).send('Server Error');
+            res.status(500).send('Server Error');
         }
     }
 
-    async updateUserById(req: Request, res: Response): Promise<Response> {
+    async updateUserById(req: Request, res: Response) {
         const { id } = req.params
         const { firstname, lastname, email } = req.body;
 
@@ -91,7 +91,7 @@ export class UserController {
     }
 
 
-    async deleteUserById(req: Request, res: Response): Promise<Response> {
+    async deleteUserById(req: Request, res: Response) {
         const { id } = req.params
 
         try {
@@ -104,7 +104,7 @@ export class UserController {
             }
         } catch (err) {
             console.error(err);
-            return res.status(500).send('Server Error');
+            res.status(500).send('Server Error');
         }
     }
 

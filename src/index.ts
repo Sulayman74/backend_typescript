@@ -1,8 +1,5 @@
-import * as dotenv from "dotenv"
-
 import { Server } from "./server";
+import dotenv from "dotenv"
 dotenv.config()
-const port = process.env.PORT
-
-const server = new Server(parseInt(port))
+const server = new Server(8080)
 server.start()

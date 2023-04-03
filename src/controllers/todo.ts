@@ -38,7 +38,7 @@ export class TodoController {
         }
     }
 
-    async getTodoById(req: Request, res: Response): Promise<Response> {
+    async getTodoById(req: Request, res: Response) {
         const { id } = req.params;
 
         try {
@@ -47,7 +47,7 @@ export class TodoController {
             const todos = result.rowCount
             const todoByID = result.rows[0]
             if (todos > 0) {
-                return res.status(200).json(todoByID);
+                res.status(200).json(todoByID);
             } else {
                 res.status(404).send('Todo not found');
             }
