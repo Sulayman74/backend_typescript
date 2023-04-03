@@ -11,7 +11,7 @@ export class UserController {
         // Vérifie si l'e-mail est valide en utilisant la fonction isEmail de Validator
         console.log("email:", email);
         if (!validator.isEmail(email)) {
-            res.status(400).json({ message: 'L\'adresse e-mail est invalide' });
+            res.status(400).json({ message: "L'adresse e-mail est invalide" });
         }
         try {
             // Recherche l'utilisateur dans la base de données
@@ -20,7 +20,7 @@ export class UserController {
 
             // Vérifie si l'utilisateur existe déjà
             if (user) {
-                res.status(403).json({ message: 'Cet utilisateur existe déjà' });
+                res.status(403).json({ message: "Cet utilisateur existe déjà" });
             }
 
             // Crée un nouvel utilisateur dans la base de données
@@ -33,10 +33,10 @@ export class UserController {
             const newUserResult = await pool.query(register, values);
             const newUser = newUserResult.rows[0];
 
-            res.status(201).json(newUser);
+            res.status(201).json({ "user": newUser, "message": "utilisateur bien enregistré" });
         } catch (error) {
             // console.error(error);
-            return res.status(500).json({ message: 'Erreur lors de la création de l\'utilisateur', error: error.detail });
+            return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur", error: error.detail });
         }
     }
 
