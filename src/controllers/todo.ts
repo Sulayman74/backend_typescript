@@ -39,8 +39,10 @@ export class TodoController {
 
     async getTodoById(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
+        const { todo_id } = req.body
         try {
-            const result = await pool.query('SELECT * FROM todos WHERE user_id = $1', [id]);
+            const todo = await pool.query('SELECT * FROM todo WHERE id = $1 AND todo_id= $2', [id, todo_id])
+            const result = await pool.query('SELECT * FROM todos WHERE todo_id = $1', [id]);
             if (result.rowCount > 0) {
                 return res.status(200).json(result.rows);
             } else {
